@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-color-theme="blue">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Performance and Security Enhancements -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' //www.highperformanceformat.com //pl27655671.revenuecpmgate.com; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' https://fonts.googleapis.com;">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#1976D2">
+    <link rel="manifest" href="manifest.json">
+    
+    <title>I Need - All In One</title>
+
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #1976D2;
+            --primary-gradient: linear-gradient(135deg, var(--primary-color), color-mix(in srgb, var(--primary-color) 85%, black));
+            --background-color: #f4f5f7;
+            --card-background: #ffffff;
+            --card-border-color: #e0e0e0;
+            --text-color-dark: #212121;
+            --text-color-light: #757575;
+            --header-text-color: #ffffff;
+            --sidebar-background: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --highlight-color: color-mix(in srgb, var(--primary-color) 10%, transparent);
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --card-hover-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+            --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-medium: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius: 12px;
+            --sidebar-width: 280px;
+        }
+
+        html[data-theme='dark'] {
+            --background-color: #121212;
+            --card-background: #1e1e1e;
+            --card-border-color: #333333;
+            --text-color-dark: #e0e0e0;
+            --text-color-light: #b0b0b0;
+            --sidebar-background: #212121;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --highlight-color: color-mix(in srgb, var(--primary-color) 20%, transparent);
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --card-hover-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        html[data-color-theme='blue'] { --primary-color: #1976D2; }
+        html[data-color-theme='green'] { --primary-color: #388E3C; }
+        html[data-color-theme='purple'] { --primary-color: #7B1FA2; }
+        html[data-color-theme='orange'] { --primary-color: #F57C00; }
+        html[data-color-theme='red'] { --primary-color: #D32F2F; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: var(--background-color); color: var(--text-color-dark); -webkit-tap-highlight-color: transparent; line-height: 1.5; overflow-x: hidden; }
+        .container { padding: 1rem; max-width: 1200px; margin: 0 auto; }
+        header { background-image: var(--primary-gradient); color: var(--header-text-color); padding: 0.8rem 1rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px var(--shadow-color); transition: var(--transition-medium); }
+        .header-left, .header-right { display: flex; align-items: center; gap: 1rem; }
+        .menu-btn, .search-btn { background: none; border: none; color: var(--header-text-color); font-size: 1.5rem; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: var(--transition-fast); }
+        .menu-btn:hover, .search-btn:hover { background-color: rgba(255, 255, 255, 0.15); }
+        header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.5px; }
+        .search-container { display: none; padding: 0.8rem 1rem; background-color: var(--card-background); box-shadow: 0 2px 4px rgba(0,0,0,0.1) inset; position: sticky; top: 60px; z-index: 999; transition: var(--transition-medium); }
+        .search-container.active { display: block; animation: slideDown 0.3s ease-out; }
+        @keyframes slideDown { from { transform: translateY(-10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        #appSearch { width: 100%; padding: 0.7rem 1rem; font-size: 1rem; border: 1px solid var(--card-border-color); border-radius: 50px; outline: none; background-color: var(--background-color); color: var(--text-color-dark); transition: var(--transition-fast); }
+        #appSearch:focus { border-color: var(--primary-color); box-shadow: 0 0 0 2px var(--highlight-color); }
+        .main-tabs { background-image: var(--primary-gradient); display: flex; overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none; position: sticky; top: 60px; z-index: 998; transition: var(--transition-medium); }
+        .main-tabs::-webkit-scrollbar { display: none; }
+        .main-tabs a { flex-shrink: 0; padding: 1rem; text-align: center; color: rgba(255, 255, 255, 0.8); text-decoration: none; font-weight: 500; font-size: 0.9rem; text-transform: uppercase; border-bottom: 3px solid transparent; white-space: nowrap; min-width: 100px; transition: var(--transition-fast); position: relative; }
+        .main-tabs a.active { color: var(--header-text-color); border-bottom-color: var(--header-text-color); }
+        .main-tabs a:hover { color: var(--header-text-color); background-color: rgba(255, 255, 255, 0.1); }
+        .app-section { display: none; animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .app-section.active { display: block; }
+        .grid-heading { font-size: 1.2rem; font-weight: 700; margin: 2rem 0 1rem 0; padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary-color); color: var(--primary-color); display: flex; align-items: center; transition: var(--transition-medium); }
+        .grid-heading i { margin-right: 0.7rem; font-size: 1.1rem; }
+        #section-home .grid-heading:first-of-type { margin-top: 1rem; }
+        #searchResultsContainer .grid-heading { margin-top: 1rem; }
+        .app-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 1.2rem; padding-top: 1rem; }
+        .app-card { background-color: var(--card-background); border-radius: var(--border-radius); border: 1px solid var(--card-border-color); box-shadow: var(--card-shadow); padding: 1rem 0.75rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: var(--text-color-dark); aspect-ratio: 1 / 1; position: relative; cursor: pointer; transition: var(--transition-medium); transform-style: preserve-3d; transform: perspective(500px) translateZ(0); will-change: transform, box-shadow; }
+        .app-card:hover { border-color: var(--primary-color); box-shadow: var(--card-hover-shadow); transform: perspective(500px) translateZ(20px); }
+        .app-card .app-icon { width: 44px; height: 44px; margin-bottom: 0.75rem; border-radius: 12px; background-color: var(--primary-color); color: var(--header-text-color); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; transition: var(--transition-fast); }
+        .app-card:hover .app-icon { transform: scale(1.1); }
+        .app-card .app-name { font-size: 0.75rem; font-weight: 500; line-height: 1.3; transition: var(--transition-fast); }
+        .google-search-fallback { text-align: center; padding: 2rem 1rem; margin-top: 2rem; background-color: var(--card-background); border: 1px dashed var(--card-border-color); border-radius: var(--border-radius); animation: fadeIn 0.5s ease-out; }
+        .google-search-fallback p { margin-bottom: 1rem; font-size: 1rem; color: var(--text-color-light); }
+        .google-search-fallback a { display: inline-block; padding: 0.7rem 1.5rem; background-color: var(--primary-color); color: var(--header-text-color); border-radius: 50px; text-decoration: none; font-weight: 500; transition: var(--transition-medium); }
+        .google-search-fallback a:hover { opacity: 0.9; box-shadow: var(--card-hover-shadow); }
+        .sidebar { position: fixed; top: 0; left: 0; width: var(--sidebar-width); height: 100vh; background-color: var(--sidebar-background); z-index: 2000; transform: translateX(calc(-1 * var(--sidebar-width))); box-shadow: 4px 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform; }
+        .sidebar.open { transform: translateX(0); }
+        .sidebar-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--card-border-color); }
+        .sidebar-header h2 { font-size: 1.2rem; font-weight: 700; color: var(--primary-color); }
+        .sidebar-settings { padding: 1rem 1.5rem; border-bottom: 1px solid var(--card-border-color); }
+        .sidebar-nav { list-style: none; padding: 0; margin: 0; flex-grow: 1; overflow-y: auto; }
+        .sidebar-nav a { display: flex; align-items: center; gap: 1.5rem; padding: 1rem 1.5rem; text-decoration: none; color: var(--text-color-dark); font-weight: 500; border-bottom: 1px solid var(--background-color); transition: var(--transition-fast); }
+        .sidebar-nav a:hover { background-color: var(--highlight-color); }
+        .sidebar-nav i { font-size: 1.2rem; width: 24px; text-align: center; color: var(--text-color-light); transition: var(--transition-fast); }
+        .setting-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; font-weight: 500; }
+        .color-swatches { display: flex; gap: 0.5rem; }
+        .color-swatch { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid var(--card-border-color); transition: var(--transition-fast); transform: scale(1); will-change: transform; }
+        .color-swatch:hover { transform: scale(1.1); }
+        .color-swatch.active { box-shadow: 0 0 0 2px var(--primary-color); transform: scale(1.1); }
+        .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 34px; transition: var(--transition-fast); }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: var(--transition-fast); }
+        input:checked + .slider { background-color: var(--primary-color); }
+        input:checked + .slider:before { transform: translateX(22px); }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); z-index: 1999; opacity: 0; visibility: hidden; transition: var(--transition-medium); backdrop-filter: blur(3px); }
+        .overlay.active { opacity: 1; visibility: visible; }
+        .loading-spinner { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(3px); }
+        .loading-spinner.active { display: flex; animation: fadeIn 0.3s ease; }
+        .spinner { width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: var(--primary-color); animation: spin 1s ease-in-out infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (min-width: 768px) { .app-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); } .app-card .app-icon { width: 50px; height: 50px; font-size: 2rem; } .app-card .app-name { font-size: 0.85rem; } }
+        @media (min-width: 1024px) { .app-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1.5rem; } }
+    </style>
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Settings</h2>
+        </div>
+        <div class="sidebar-settings">
+            <div class="setting-item">
+                <span>Theme Color</span>
+                <div class="color-swatches" id="colorSwatchesContainer"></div>
+            </div>
+            <div class="setting-item">
+                <span>Dark Mode</span>
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+        <ul class="sidebar-nav" id="sidebarNav"></ul>
+    </div>
+    
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main Header -->
+    <header>
+        <div class="header-left">
+            <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1>I Need</h1>
+        </div>
+        <div class="header-right">
+            <button class="search-btn" id="searchBtn" aria-label="Search">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Search Container -->
+    <div class="search-container" id="searchContainer">
+        <input type="text" id="appSearch" placeholder="Search for any app and press Enter..." aria-label="Search apps">
+    </div>
+    
+    <!-- Main Tabs -->
+    <nav class="main-tabs" id="mainTabs" aria-label="App categories"></nav>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Banner Ad container -->
+        <div class="ad-container-banner" style="text-align: center; margin: 1rem 0;">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '0d2e58166af7794c3c538501523c26c4',
+                    'format' : 'iframe',
+                    'height' : 90,
+                    'width' : 728,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/0d2e58166af7794c3c538501523c26c4/invoke.js"></script>
+        </div>
+        
+        <div id="appSectionsContainer"></div>
+    </main>
+
+    <!-- Search Results Content (Maintained for future use) -->
+    <div class="container" id="searchResultsContainer" style="display: none;">
+        <h2 class="grid-heading"><i class="fas fa-search"></i> Search Results</h2>
+        <div class="app-grid" id="searchResultsGrid"></div>
+        <div id="googleSearchFallback" class="google-search-fallback" style="display: none;">
+             <p>No apps found in 'I Need'. Would you like to search the web?</p>
+             <a id="googleSearchLink" href="#" target="_blank" rel="noopener noreferrer">Search on Google</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            loadingSpinner.classList.add('active');
+            
+            initializeLayout();
+            setupEventListeners();
+            setupSettings();
+            switchTab('home');
+
+            // Hide spinner after initial setup is complete
+            loadingSpinner.classList.remove('active');
+        });
+        
+        const categoryInfo = {
+            "home": { name: "Home", icon: "fa-solid fa-house" },
+            "popular": { name: "Popular", icon: "fa-solid fa-star" },
+            "social_media": { name: "Social", icon: "fa-solid fa-users" },
+            "shopping": { name: "Shopping", icon: "fa-solid fa-bag-shopping" },
+            "games": { name: "Games", icon: "fa-solid fa-gamepad" },
+            "islamic": { name: "Islamic", icon: "fa-solid fa-moon" },
+            "government_services": { name: "Govt & Services", icon: "fa-solid fa-landmark" },
+            "telecom": { name: "Telecom", icon: "fa-solid fa-tower-broadcast" },
+            "free_movies": { name: "Movies", icon: "fa-solid fa-film" },
+            "ai_tools_editors": { name: "AI & Tools", icon: "fa-solid fa-brain" }
+        };
+
+        const popularAppNames = ['Facebook', 'YouTube Movies', 'Amazon', 'Flipkart', 'ChatGPT', 'Quran.com', 'Google Gemini', 'Canva', 'Photopea', 'IRCTC', 'My Aadhaar', 'Instagram', 'X (Twitter)', 'Threads', 'Snapchat', 'Telegram', 'LinkedIn', 'Reddit', 'Discord', 'TikTok', 'Myntra', 'AJIO', 'Meesho', 'JioMart', 'BigBasket', 'Blinkit', 'Lichess.org', 'Slither.io', 'Chess.com', 'Wordle', 'Sudoku', 'IslamicFinder', 'QiblaFinder', 'Muslim Pro', 'Sunnah.com', 'Voter Portal', 'Passport Seva', 'DigiLocker', 'Parivahan', 'UMANG', 'Jio', 'Airtel', 'Vi', 'BSNL', 'MX Player', 'SonyLIV', 'ZEE5', 'Hotstar', 'JioCinema', 'Claude'];
+
+        const rawAppsData = [
+            // SOCIAL MEDIA
+            { name: "Facebook", url: "https://m.facebook.com/", category: "social_media", icon: "fab fa-facebook" },
+            { name: "Instagram", url: "https://www.instagram.com/", category: "social_media", icon: "fab fa-instagram" },
+            { name: "X (Twitter)", url: "https://twitter.com/", category: "social_media", icon: "fab fa-twitter" },
+            { name: "Threads", url: "https://www.threads.net/", category: "social_media", icon: "fab fa-threads" },
+            { name: "Snapchat", url: "https://web.snapchat.com/", category: "social_media", icon: "fab fa-snapchat" },
+            { name: "Telegram", url: "https://web.telegram.org/a/", category: "social_media", icon: "fab fa-telegram" },
+            { name: "LinkedIn", url: "https://www.linkedin.com/", category: "social_media", icon: "fab fa-linkedin" },
+            { name: "Reddit", url: "https://www.reddit.com/", category: "social_media", icon: "fab fa-reddit-alien" },
+            { name: "Pinterest", url: "https://www.pinterest.com/", category: "social_media", icon: "fab fa-pinterest" },
+            { name: "Tumblr", url: "https://www.tumblr.com/", category: "social_media", icon: "fab fa-tumblr" },
+            { name: "Koo", url: "https://www.kooapp.com/", category: "social_media", icon: "fas fa-crow" },
+            { name: "Mastodon", url: "https://mastodon.social/", category: "social_media", icon: "fab fa-mastodon" },
+            { name: "Quora", url: "https://www.quora.com/", category: "social_media", icon: "fab fa-quora" },
+            { name: "Discord", url: "https://discord.com/app", category: "social_media", icon: "fab fa-discord" },
+            { name: "Clubhouse", url: "https://www.clubhouse.com/", category: "social_media", icon: "fas fa-headset" },
+            { name: "TikTok", url: "https://www.tiktok.com/", category: "social_media", icon: "fab fa-tiktok" },
+            { name: "VK", url: "https://m.vk.com/", category: "social_media", icon: "fab fa-vk" },
+            { name: "ShareChat", url: "https://sharechat.com/", category: "social_media", icon: "fas fa-comments" },
+            { name: "MeWe", url: "https://mewe.com/", category: "social_media", icon: "fas fa-users-viewfinder" },
+            { name: "Facebook Lite", url: "https://facebook.com/lite", category: "social_media", icon: "fab fa-facebook-f" },
+            { name: "WhatsApp", url: "https://web.whatsapp.com", category: "social_media", icon: "fab fa-whatsapp" },
+            { name: "TruthSocial", url: "https://truthsocial.com", category: "social_media", icon: "fas fa-bullhorn" },
+            { name: "WeChat", url: "https://wechat.com", category: "social_media", icon: "fab fa-weixin" },
+            { name: "Line", url: "https://line.me", category: "social_media", icon: "fab fa-line" },
+            { name: "Viber", url: "https://viber.com", category: "social_media", icon: "fab fa-viber" },
+            { name: "Chingari", url: "https://chingari.io", category: "social_media", icon: "fas fa-fire" },
+            { name: "Helo App", url: "https://helo-app.com", category: "social_media", icon: "fas fa-hand-spock" },
+            { name: "Likee", url: "https://likee.video", category: "social_media", icon: "fas fa-heart" },
+            { name: "Bigo", url: "https://bigo.tv", category: "social_media", icon: "fas fa-video" },
+            { name: "Imo", url: "https://imo.im", category: "social_media", icon: "fas fa-comment" },
+            { name: "Linktree", url: "https://linktree.com", category: "social_media", icon: "fas fa-link" },
+            { name: "Twitch", url: "https://twitch.tv", category: "social_media", icon: "fab fa-twitch" },
+            // SHOPPING
+            { name: "Amazon", url: "https://www.amazon.in/", category: "shopping", icon: "fab fa-amazon" },
+            { name: "Flipkart", url: "https://www.flipkart.com/", category: "shopping", icon: "fas fa-shopping-bag" },
+            { name: "Myntra", url: "https://www.myntra.com/", category: "shopping", icon: "fas fa-tshirt" },
+            { name: "AJIO", url: "https://www.ajio.com/", category: "shopping", icon: "fas fa-vest-patches" },
+            { name: "Meesho", url: "https://www.meesho.com/", category: "shopping", icon: "fas fa-store" },
+            { name: "Snapdeal", url: "https://www.snapdeal.com/", category: "shopping", icon: "fas fa-tags" },
+            { name: "Nykaa", url: "https://www.nykaa.com/", category: "shopping", icon: "fas fa-gem" },
+            { name: "Tata CLiQ", url: "https://www.tatacliq.com/", category: "shopping", icon: "fas fa-star-of-life" },
+            { name: "JioMart", url: "https://www.jiomart.com/", category: "shopping", icon: "fas fa-shopping-basket" },
+            { name: "BigBasket", url: "https://www.bigbasket.com/", category: "shopping", icon: "fas fa-carrot" },
+            { name: "Blinkit", url: "https://blinkit.com/", category: "shopping", icon: "fas fa-shipping-fast" },
+            { name: "FirstCry", url: "https://www.firstcry.com/", category: "shopping", icon: "fas fa-baby-carriage" },
+            { name: "Reliance Digital", url: "https://www.reliancedigital.in/", category: "shopping", icon: "fas fa-laptop" },
+            { name: "Croma", url: "https://www.croma.com/", category: "shopping", icon: "fas fa-plug" },
+            { name: "Decathlon", url: "https://www.decathlon.in/", category: "shopping", icon: "fas fa-futbol" },
+            { name: "Shopsy", url: "https://www.shopsy.in/", category: "shopping", icon: "fas fa-percent" },
+            { name: "Lenskart", url: "https://www.lenskart.com/", category: "shopping", icon: "fas fa-glasses" },
+            { name: "Pepperfry", url: "https://www.pepperfry.com/", category: "shopping", icon: "fas fa-couch" },
+            { name: "Mamaearth", url: "https://mamaearth.in/", category: "shopping", icon: "fas fa-leaf" },
+            { name: "Boat Lifestyle", url: "https://www.boat-lifestyle.com/", category: "shopping", icon: "fas fa-headphones" },
+            { name: "Bewakoof", url: "https://www.bewakoof.com/", category: "shopping", icon: "fas fa-user-ninja" },
+            { name: "AliExpress", url: "https://www.aliexpress.com/", category: "shopping", icon: "fas fa-globe" },
+            { name: "Swiggy Instamart", url: "https://swiggy.com/instamart", category: "shopping", icon: "fas fa-shopping-cart" },
+            { name: "Realme", url: "https://realme.com/in", category: "shopping", icon: "fas fa-mobile-alt" },
+            { name: "Samsung", url: "https://samsung.com/in", category: "shopping", icon: "fas fa-mobile" },
+            { name: "Paytm Mall", url: "https://paytmmall.com", category: "shopping", icon: "fas fa-store-alt" },
+            { name: "Healthkart", url: "https://healthkart.com", category: "shopping", icon: "fas fa-heartbeat" },
+            { name: "Sugar Cosmetics", url: "https://sugarcosmetics.com", category: "shopping", icon: "fas fa-paint-brush" },
+            // GAMES
+            { name: "Lichess.org", url: "https://lichess.org/", category: "games", icon: "fas fa-chess" },
+            { name: "2048", url: "https://play2048.co/", category: "games", icon: "fas fa-border-all" },
+            { name: "Slither.io", url: "https://slither.io/", category: "games", icon: "fas fa-staff-snake" },
+            { name: "Agar.io", url: "https://agar.io/", category: "games", icon: "fas fa-circle-notch" },
+            { name: "Krunker.io", url: "https://krunker.io/", category: "games", icon: "fas fa-crosshairs" },
+            { name: "Google Snake", url: "https://www.google.com/search?q=snake+game", category: "games", icon: "fab fa-google" },
+            { name: "Minesweeper", url: "https://minesweeper.online/", category: "games", icon: "fas fa-bomb" },
+            { name: "Pacman", url: "https://www.google.com/search?q=pacman", category: "games", icon: "fas fa-ghost" },
+            { name: "Flappy Bird", url: "https://flappybird.io/", category: "games", icon: "fas fa-kiwi-bird" },
+            { name: "Skribbl.io", url: "https://skribbl.io/", category: "games", icon: "fas fa-pencil-alt" },
+            { name: "8 Ball Pool", url: "https://www.miniclip.com/games/8-ball-pool/en/", category: "games", icon: "fas fa-bowling-ball" },
+            { name: "Chess.com", url: "https://www.chess.com/play", category: "games", icon: "fas fa-chess-knight" },
+            { name: "Sudoku", url: "https://sudoku.com/", category: "games", icon: "fas fa-th" },
+            { name: "Solitaire", url: "https://www.google.com/search?q=solitaire", category: "games", icon: "fas fa-spade" },
+            { name: "Temple Run 2", url: "https://poki.com/en/g/temple-run-2", category: "games", icon: "fas fa-running" },
+            { name: "Wordle", url: "https://www.nytimes.com/games/wordle/index.html", category: "games", icon: "fas fa-font" },
+            { name: "Jigsaw Planet", url: "https://www.jigsawplanet.com/", category: "games", icon: "fas fa-puzzle-piece" },
+            { name: "Quick Draw", url: "https://quickdraw.withgoogle.com", category: "games", icon: "fas fa-pen-nib" },
+            { name: "Tetris", url: "https://tetris.com/play-tetris", category: "games", icon: "fas fa-shapes" },
+            { name: "Kahoot", url: "https://kahoot.it", category: "games", icon: "fas fa-graduation-cap" },
+            // ISLAMIC
+            { name: "Quran.com", url: "https://quran.com/", category: "islamic", icon: "fas fa-quran" },
+            { name: "IslamicFinder", url: "https://www.islamicfinder.org/", category: "islamic", icon: "fas fa-mosque" },
+            { name: "QiblaFinder", url: "https://qiblafinder.withgoogle.com/", category: "islamic", icon: "fas fa-kaaba" },
+            { name: "Muslim Pro", url: "https://www.muslimpro.com/", category: "islamic", icon: "fas fa-star-and-crescent" },
+            { name: "PrayerTimes.org", url: "https://prayertimes.org/", category: "islamic", icon: "fas fa-clock" },
+            { name: "Assabile.com", url: "https://www.assabile.com/", category: "islamic", icon: "fas fa-headphones-alt" },
+            { name: "Tanzil.net", url: "https://tanzil.net/", category: "islamic", icon: "fas fa-book-open" },
+            { name: "IslamQA.org", url: "https://islamqa.info/en", category: "islamic", icon: "fas fa-question-circle" },
+            { name: "Sunnah.com", url: "https://sunnah.com/", category: "islamic", icon: "fas fa-book" },
+            { name: "Dua and Zikr", url: "https://www.duasrevival.com/", category: "islamic", icon: "fas fa-praying-hands" },
+            { name: "MuslimCentral", url: "https://muslimcentral.com/", category: "islamic", icon: "fas fa-podcast" },
+            { name: "Zakat Calculator", url: "https://www.islamic-relief.org/zakat/calculator/", category: "islamic", icon: "fas fa-calculator" },
+            { name: "Islamic Calendar", url: "https://www.islamicfinder.org/islamic-calendar/", category: "islamic", icon: "fas fa-calendar-alt" },
+            { name: "Islamicity", url: "https://islamicity.org", category: "islamic", icon: "fas fa-mosque" },
+            { name: "Duas.org", url: "https://duas.org", category: "islamic", icon: "fas fa-praying-hands" },
+            { name: "Haramain", url: "https://haramain.info", category: "islamic", icon: "fas fa-kaaba" },
+            // GOVERNMENT & SERVICES
+            { name: "Voter Portal", url: "https://voters.eci.gov.in/", category: "government_services", icon: "fas fa-check-to-slot" },
+            { name: "My Aadhaar", url: "https://myaadhaar.uidai.gov.in/", category: "government_services", icon: "fas fa-id-card" },
+            { name: "PAN (NSDL)", url: "https://onlineservices.nsdl.com/paam", category: "government_services", icon: "fas fa-address-card" },
+            { name: "Passport Seva", url: "https://www.passportindia.gov.in/", category: "government_services", icon: "fas fa-passport" },
+            { name: "Parivahan", url: "https://parivahan.gov.in/", category: "government_services", icon: "fas fa-car" },
+            { name: "DigiLocker", url: "https://www.digilocker.gov.in/", category: "government_services", icon: "fas fa-lock" },
+            { name: "UMANG", url: "https://web.umang.gov.in/", category: "government_services", icon: "fas fa-mobile-alt" },
+            { name: "EPFO", url: "https://www.epfindia.gov.in/", category: "government_services", icon: "fas fa-rupee-sign" },
+            { name: "e-Shram", url: "https://eshram.gov.in/", category: "government_services", icon: "fas fa-hard-hat" },
+            { name: "CoWIN", url: "https://www.cowin.gov.in/", category: "government_services", icon: "fas fa-syringe" },
+            { name: "Income Tax", url: "https://www.incometax.gov.in/iec/foportal/", category: "government_services", icon: "fas fa-file-invoice-dollar" },
+            { name: "PM-KISAN", url: "https://pmkisan.gov.in/", category: "government_services", icon: "fas fa-tractor" },
+            { name: "NREGA", url: "https://nrega.nic.in/", category: "government_services", icon: "fas fa-digging" },
+            { name: "Ayushman Bharat", url: "https://www.pmjay.gov.in/", category: "government_services", icon: "fas fa-heartbeat" },
+            { name: "LIC India", url: "https://licindia.in/", category: "government_services", icon: "fas fa-shield-alt" },
+            { name: "IRCTC", url: "https://www.irctc.co.in/", category: "government_services", icon: "fas fa-train" },
+            { name: "Bharat Gas", url: "https://www.ebharatgas.com/", category: "government_services", icon: "fas fa-fire-alt" },
+            { name: "Indane", url: "https://cx.indianoil.in/", category: "government_services", icon: "fas fa-burn" },
+            { name: "HP Gas", url: "https://myhpgas.in/", category: "government_services", icon: "fas fa-fire" },
+            { name: "UIDAI", url: "https://uidai.gov.in", category: "government_services", icon: "fas fa-id-badge" },
+            { name: "eSanjeevani", url: "https://esanjeevani.in", category: "government_services", icon: "fas fa-laptop-medical" },
+            { name: "MyGov", url: "https://mygov.in", category: "government_services", icon: "fas fa-landmark" },
+            { name: "Absher", url: "https://absher.sa", category: "government_services", icon: "fas fa-id-card-alt" },
+            { name: "Sehaty", url: "https://sehaty.sa", category: "government_services", icon: "fas fa-heart-pulse" },
+            // TELECOM
+            { name: "Airtel", url: "https://www.airtel.in/", category: "telecom", icon: "fas fa-signal" },
+            { name: "Jio", url: "https://www.jio.com/", category: "telecom", icon: "fas fa-wifi" },
+            { name: "Vi", url: "https://www.myvi.in/", category: "telecom", icon: "fas fa-broadcast-tower" },
+            { name: "BSNL", url: "https://www.bsnl.co.in/", category: "telecom", icon: "fas fa-sim-card" },
+            { name: "Airtel Xstream", url: "https://www.airtelxstream.in/", category: "telecom", icon: "fas fa-tv" },
+            { name: "JioTV", url: "https://www.jiotv.com/", category: "telecom", icon: "fas fa-desktop" },
+            { name: "Vi Movies & TV", url: "https://moviesandtv.myvi.in/", category: "telecom", icon: "fas fa-film" },
+            { name: "JioFiber", url: "https://www.jio.com/fiber", category: "telecom", icon: "fas fa-network-wired" },
+            { name: "Etisalat", url: "https://www.etisalat.ae/en/index.jsp", category: "telecom", icon: "fas fa-satellite-dish" },
+            { name: "STC", url: "https://www.stc.com.sa/", category: "telecom", icon: "fas fa-tower-cell" },
+            { name: "Vodafone", url: "https://www.vodafone.com/", category: "telecom", icon: "fas fa-comment-dots" },
+            { name: "T-Mobile", url: "https://www.t-mobile.com/", category: "telecom", icon: "fas fa-signal-stream" },
+            { name: "Verizon", url: "https://www.verizon.com/", category: "telecom", icon: "fas fa-check" },
+            { name: "AT&T", url: "https://www.att.com/", category: "telecom", icon: "fas fa-globe-americas" },
+            { name: "Safaricom", url: "https://safaricom.co.ke", category: "telecom", icon: "fas fa-sim-card" },
+            // FREE MOVIES
+            { name: "MX Player", url: "https://www.mxplayer.in/", category: "free_movies", icon: "fas fa-play-circle" },
+            { name: "YouTube Movies", url: "https://www.youtube.com/movies", category: "free_movies", icon: "fab fa-youtube-square" },
+            { name: "Tubi TV", url: "https://tubitv.com/", category: "free_movies", icon: "fas fa-tv-alt" },
+            { name: "Pluto TV", url: "https://pluto.tv/", category: "free_movies", icon: "fas fa-rocket" },
+            { name: "Crackle", url: "https://www.crackle.com/", category: "free_movies", icon: "fas fa-bolt-lightning" },
+            { name: "Popcornflix", url: "https://www.popcornflix.com/", category: "free_movies", icon: "fas fa-popcorn" },
+            { name: "SonyLIV", url: "https://www.sonyliv.com/", category: "free_movies", icon: "fas fa-vial" },
+            { name: "ZEE5", url: "https://www.zee5.com/", category: "free_movies", icon: "fas fa-z" },
+            { name: "Hotstar", url: "https://www.hotstar.com/in/movies", category: "free_movies", icon: "fas fa-star" },
+            { name: "JioCinema", url: "https://www.jiocinema.com/", category: "free_movies", icon: "fas fa-film" },
+            { name: "Aha", url: "https://www.aha.video/", category: "free_movies", icon: "fas fa-surprise" },
+            { name: "Voot", url: "https://www.voot.com/", category: "free_movies", icon: "fas fa-infinity" },
+            { name: "NetNaija", url: "https://www.netnaija.com/", category: "free_movies", icon: "fas fa-video" },
+            { name: "sFlix", url: "https://sflix.to/", category: "free_movies", icon: "fas fa-ticket-alt" },
+            { name: "YesMovies", url: "https://yesmovies.ag", category: "free_movies", icon: "fas fa-clapperboard" },
+            { name: "123Movies", url: "https://123moviesfree.net", category: "free_movies", icon: "fas fa-film" },
+            { name: "VegaMovies", url: "https://vegamovies.day", category: "free_movies", icon: "fas fa-video-camera" },
+            // AI TOOLS & EDITORS
+            { name: "ChatGPT", url: "https://chat.openai.com/", category: "ai_tools_editors", icon: "fas fa-robot" },
+            { name: "Google Gemini", url: "https://gemini.google.com/", category: "ai_tools_editors", icon: "fas fa-star-of-life" },
+            { name: "Claude", url: "https://claude.ai/", category: "ai_tools_editors", icon: "fas fa-brain" },
+            { name: "Poe", url: "https://poe.com/", category: "ai_tools_editors", icon: "fas fa-feather-alt" },
+            { name: "Bing Chat", url: "https://www.bing.com/chat", category: "ai_tools_editors", icon: "fab fa-microsoft" },
+            { name: "Remove.bg", url: "https://www.remove.bg/", category: "ai_tools_editors", icon: "fas fa-eraser" },
+            { name: "Photopea", url: "https://www.photopea.com/", category: "ai_tools_editors", icon: "fas fa-image" },
+            { name: "Pixlr", url: "https://pixlr.com/", category: "ai_tools_editors", icon: "fas fa-paint-roller" },
+            { name: "Canva", url: "https://www.canva.com/", category: "ai_tools_editors", icon: "fas fa-palette" },
+            { name: "CapCut", url: "https://www.capcut.com/", category: "ai_tools_editors", icon: "fas fa-film" },
+            { name: "Veed.io", url: "https://www.veed.io/", category: "ai_tools_editors", icon: "fas fa-video" },
+            { name: "HeyGen", url: "https://www.heygen.com/", category: "ai_tools_editors", icon: "fas fa-user-tie" },
+            { name: "Krisp", url: "https://krisp.ai/", category: "ai_tools_editors", icon: "fas fa-microphone-slash" },
+            { name: "Fliki", url: "https://fliki.ai/", category: "ai_tools_editors", icon: "fas fa-file-video" },
+            { name: "Soundraw", url: "https://soundraw.io/", category: "ai_tools_editors", icon: "fas fa-music" },
+            { name: "RunwayML", url: "https://runwayml.com", category: "ai_tools_editors", icon: "fas fa-magic" },
+            { name: "InVideo", url: "https://invideo.io", category: "ai_tools_editors", icon: "fas fa-video-plus" },
+            { name: "Murf.ai", url: "https://murph.ai", category: "ai_tools_editors", icon: "fas fa-waveform" },
+            { name: "Figma", url: "https://figma.com", category: "ai_tools_editors", icon: "fab fa-figma" },
+            { name: "QuillBot", url: "https://quillbot.com", category: "ai_tools_editors", icon: "fas fa-pen-alt" },
+            { name: "DeepL", url: "https://deepl.com/translator", category: "ai_tools_editors", icon: "fas fa-language" },
+            { name: "Replit", url: "https://replit.com", category: "ai_tools_editors", icon: "fas fa-code" }
+        ];
+
+        function initializeLayout() {
+            const sidebarNav = document.getElementById('sidebarNav');
+            const mainTabs = document.getElementById('mainTabs');
+            const appSectionsContainer = document.getElementById('appSectionsContainer');
+            
+            const existingNames = new Set(rawAppsData.map(app => app.name.toLowerCase()));
+
+            function addAppIfNotExists(app) {
+                if (!existingNames.has(app.name.toLowerCase())) {
+                    rawAppsData.push(app);
+                    existingNames.add(app.name.toLowerCase());
+                }
+            }
+            
+            // Home Tab & Section
+            const homeTab = document.createElement('a');
+            homeTab.href = '#home';
+            homeTab.dataset.tab = 'home';
+            homeTab.textContent = categoryInfo['home'].name;
+            homeTab.classList.add('active');
+            mainTabs.appendChild(homeTab);
+
+            const homeSection = document.createElement('section');
+            homeSection.id = 'section-home';
+            homeSection.className = 'app-section active';
+            appSectionsContainer.appendChild(homeSection);
+
+            const popularHeading = document.createElement('h2');
+            popularHeading.className = 'grid-heading';
+            popularHeading.innerHTML = `<i class="${categoryInfo['popular'].icon}"></i> ${categoryInfo['popular'].name}`;
+            homeSection.appendChild(popularHeading);
+            const popularGrid = document.createElement('div');
+            popularGrid.className = 'app-grid';
+            
+            const popularAppsMap = new Map(rawAppsData.map(app => [app.name, app]));
+            const popularApps = popularAppNames.map(name => popularAppsMap.get(name)).filter(Boolean);
+            
+            popularApps.forEach(app => popularGrid.appendChild(createAppCard(app)));
+            homeSection.appendChild(popularGrid);
+            
+            // Other Category Tabs & Sections
+            Object.keys(categoryInfo).forEach(key => {
+                if (key !== 'home' && key !== 'popular') {
+                    const tab = document.createElement('a');
+                    tab.href = `#${key}`;
+                    tab.dataset.tab = key;
+                    tab.textContent = categoryInfo[key].name;
+                    mainTabs.appendChild(tab);
+
+                    const section = document.createElement('section');
+                    section.id = `section-${key}`;
+                    section.className = 'app-section';
+                    const appsForCategory = rawAppsData.filter(app => app.category === key);
+                    if (appsForCategory.length > 0) {
+                        section.innerHTML = `<h2 class="grid-heading"><i class="${categoryInfo[key].icon}"></i> ${categoryInfo[key].name}</h2><div class="app-grid"></div>`;
+                        const grid = section.querySelector('.app-grid');
+                        appsForCategory.sort((a, b) => a.name.localeCompare(b.name)).forEach(app => grid.appendChild(createAppCard(app)));
+                        appSectionsContainer.appendChild(section);
+                    }
+                    
+                    const sidebarLink = document.createElement('a');
+                    sidebarLink.href = `#${key}`;
+                    sidebarLink.dataset.tab = key;
+                    sidebarLink.innerHTML = `<i class="${categoryInfo[key].icon}"></i> <span>${categoryInfo[key].name}</span>`;
+                    sidebarNav.appendChild(sidebarLink);
+                }
+            });
+
+            // About Us and Privacy Policy Links in Sidebar
+            const aboutLink = document.createElement('a');
+            aboutLink.href = 'https://error-no-intarnete.github.io/Pages/ineed_about_page.html';
+            aboutLink.target = '_blank';
+            aboutLink.rel = 'noopener noreferrer';
+            aboutLink.innerHTML = `<i class="fa-solid fa-circle-info"></i> <span>About Us</span>`;
+            sidebarNav.appendChild(aboutLink);
+
+            const privacyLink = document.createElement('a');
+            privacyLink.href = 'https://error-no-intarnete.github.io/Pages/ineed_privacy_policy.html';
+            privacyLink.target = '_blank';
+            privacyLink.rel = 'noopener noreferrer';
+            privacyLink.innerHTML = `<i class="fa-solid fa-shield-halved"></i> <span>Privacy Policy</span>`;
+            sidebarNav.appendChild(privacyLink);
+        }
+
+        function createAppCard(app) {
+            const card = document.createElement('a');
+            card.href = app.url;
+            card.className = 'app-card';
+            card.setAttribute('title', app.name);
+            card.innerHTML = `<div class="app-icon ${app.icon}"></div><div class="app-name">${app.name}</div>`;
+            return card;
+        }
+
+        function handleSearch() {
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const query = document.getElementById('appSearch').value.trim();
+            if (!query) return;
+
+            loadingSpinner.classList.add('active');
+
+            const result = rawAppsData.find(app => app.name.toLowerCase() === query.toLowerCase());
+            const targetUrl = result ? result.url : `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+            
+            window.open(targetUrl, '_blank', 'noopener,noreferrer');
+            // Hide spinner immediately after opening the link
+            loadingSpinner.classList.remove('active');
+        }
+
+        function switchTab(tabId) {
+            document.getElementById('appSearch').value = '';
+            document.getElementById('searchResultsContainer').style.display = 'none';
+            document.getElementById('appSectionsContainer').style.display = 'block';
+            document.getElementById('mainTabs').style.display = 'flex';
+
+            document.querySelectorAll('.app-section').forEach(section => section.classList.remove('active'));
+            document.querySelectorAll('.main-tabs a').forEach(tab => tab.classList.remove('active'));
+
+            const sectionToShow = document.getElementById(`section-${tabId}`);
+            if (sectionToShow) sectionToShow.classList.add('active');
+            
+            const activeTab = document.querySelector(`.main-tabs a[data-tab="${tabId}"]`);
+            if (activeTab) activeTab.classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function setupEventListeners() {
+            const menuBtn = document.getElementById('menuBtn');
+            const searchBtn = document.getElementById('searchBtn');
+            const searchContainer = document.getElementById('searchContainer');
+            const appSearchInput = document.getElementById('appSearch');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+
+            menuBtn.addEventListener('click', toggleSidebar);
+            document.getElementById('overlay').addEventListener('click', closeSidebar);
+            
+            searchBtn.addEventListener('click', () => {
+                searchContainer.classList.toggle('active');
+                if (searchContainer.classList.contains('active')) {
+                    appSearchInput.focus();
+                } else {
+                    appSearchInput.value = '';
+                }
+            });
+
+            appSearchInput.addEventListener('keyup', (event) => {
+                if (event.key === 'Enter') handleSearch();
+            });
+
+            document.querySelectorAll('.main-tabs a, .sidebar-nav a[data-tab]').forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    switchTab(this.dataset.tab);
+                    closeSidebar();
+                });
+            });
+            
+            document.body.addEventListener('click', (e) => {
+                const card = e.target.closest('.app-card');
+                if(card) {
+                    e.preventDefault();
+                    loadingSpinner.classList.add('active');
+                    const url = card.getAttribute('href');
+                    // A quick check to fixup URLs that might be missing the protocol
+                    const finalUrl = url.startsWith('http') ? url : `https://${url}`;
+                    window.open(finalUrl, '_blank', 'noopener,noreferrer');
+                    // Hide spinner immediately, as the new tab provides its own loading feedback.
+                    setTimeout(() => loadingSpinner.classList.remove('active'), 300); // Short delay for visual feedback
+                }
+            });
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('overlay').classList.remove('active');
+        }
+        
+        // --- CORRECTED FUNCTIONS ---
+
+        function setupSettings() {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const colorSwatchesContainer = document.getElementById('colorSwatchesContainer');
+            const root = document.documentElement;
+            const colors = ['blue', 'green', 'purple', 'orange', 'red'];
+            
+            colors.forEach(color => {
+                const swatch = document.createElement('div');
+                swatch.className = 'color-swatch';
+                const originalTheme = root.dataset.colorTheme;
+                root.dataset.colorTheme = color;
+                swatch.style.backgroundColor = getComputedStyle(root).getPropertyValue('--primary-color');
+                root.dataset.colorTheme = originalTheme;
+                swatch.dataset.color = color;
+                colorSwatchesContainer.appendChild(swatch);
+                swatch.addEventListener('click', () => applyColorTheme(swatch.dataset.color));
+            });
+
+            darkModeToggle.addEventListener('change', function() { applyTheme(this.checked ? 'dark' : 'light'); });
+            
+            let savedTheme = 'light';
+            let savedColor = 'blue';
+
+            try {
+                savedTheme = localStorage.getItem('theme') || 'light';
+                savedColor = localStorage.getItem('colorTheme') || 'blue';
+            } catch (e) {
+                console.error("localStorage is not available.", e);
+                // Defaults will be used if localStorage fails.
+            }
+            
+            applyTheme(savedTheme);
+            applyColorTheme(savedColor);
+        }
+        
+        function applyTheme(theme) {
+            document.documentElement.dataset.theme = theme;
+            document.getElementById('darkModeToggle').checked = theme === 'dark';
+            try {
+                localStorage.setItem('theme', theme);
+            } catch (e) {
+                console.error("Failed to save theme to localStorage.", e);
+            }
+        }
+
+        function applyColorTheme(color) {
+            document.documentElement.dataset.colorTheme = color;
+            document.querySelectorAll('.color-swatch').forEach(s => s.classList.toggle('active', s.dataset.color === color));
+            try {
+                localStorage.setItem('colorTheme', color);
+            } catch (e) {
+                console.error("Failed to save color theme to localStorage.", e);
+            }
+        }
+    </script>
+    
+    <!-- Full screen ads -->
+    <script type='text/javascript' src='//pl27655671.revenuecpmgate.com/1c/62/5c/1c625ca56050742a9878087d1c4c3290.js'></script>
+</body>
+</html>
